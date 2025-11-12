@@ -8,16 +8,34 @@ datasource db {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  userId       String   @unique
+  id           Int          @id @default(autoincrement())
+  userId       String       @unique
   name         String
   passwordHash String
-  role         Role     @default(EMPLOYEE)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  role         Role         @default(EMPLOYEE)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  attendances  Attendance[]
 }
 
 enum Role {
   EMPLOYEE
   OWNER
+}
+
+enum AttendanceAction {
+  CLOCK_IN
+  CLOCK_OUT
+  BREAK_START
+  BREAK_END
+}
+
+model Attendance {
+  id         Int              @id @default(autoincrement())
+  employeeId Int
+  user       User             @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  action     AttendanceAction
+  occurredAt DateTime         @default(now())
+
+  @@index([employeeId, occurredAt])
 }
