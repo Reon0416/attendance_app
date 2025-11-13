@@ -29,7 +29,7 @@ async function postJSON<T>(url: string): Promise<T> {
   return res.json();
 }
 
-export default function EmployeeDash({ user, onLogout }: Props) {
+export default function EmployeeDash({ onLogout }: Props) {
   const [now, setNow] = useState(new Date());
   const [today, setToday] = useState<TodayState | null>(null);
   const [loading, setLoading] = useState(false);
