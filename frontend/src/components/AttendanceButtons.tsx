@@ -2,6 +2,7 @@ import { useState } from "react";
 import { resisterAttendance } from "../api/attendance";
 import type { AttendanceActionType, ConditionData } from "../types";
 import { ConditionInput } from "./ConditionInput";
+import { resisterHealthRecord } from "../api/healthCheck";
 import "./style/AttendanceButtons.css";
 
 type AttendanceStatus =
@@ -41,7 +42,7 @@ export function AttendanceButtons() {
 
       switch (action) {
         case "CLOCK_IN":
-          // await healthRecordInput(condition);
+          await resisterHealthRecord(condition);
           setStatus("AFTER_CLOCK_IN");
           setMessage(`出勤を記録しました (${hours}:${minutes})`);
           break;

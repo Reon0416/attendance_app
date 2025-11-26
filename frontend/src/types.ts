@@ -24,3 +24,8 @@ export type ConditionData = {
   health: number;
   motivation: number;
 };
+
+export type HealthRecordBody = {
+  health: number;
+  motivation: number;
+};

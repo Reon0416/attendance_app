@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import { loginHandler, authMiddleware, meHandler, logoutHandler } from "./auth";
 import { resisterAttendanceHandler, getMonthlyAttendanceHandler } from "./attendance";
+import { resisterHealthRecordHandler } from "./healthCheck";
 
 const app = express();
 const PORT = process.env.PORT
@@ -36,6 +37,9 @@ app.post("/api/attendance/resister", authMiddleware, resisterAttendanceHandler);
 
 //勤怠情報取得
 app.get("/api/attendance/getAttendanceHistory", authMiddleware, getMonthlyAttendanceHandler);
+
+// 体調記録
+app.post("/api/healthCheck/resister", authMiddleware, resisterHealthRecordHandler);
 
 
 

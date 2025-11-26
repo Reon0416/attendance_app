@@ -3,7 +3,8 @@ import { AttendanceAction } from "@prisma/client";
 import { prisma } from "./prismaClient";
 import { AuthRequest } from "./auth";
 
-/** 勤怠情報の登録 */
+
+/** 勤怠情報の登録*/
 export async function resisterAttendanceHandler(req: AuthRequest, res: Response) {
   const user = req.user;
 

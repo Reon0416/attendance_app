@@ -8,14 +8,15 @@ datasource db {
 }
 
 model User {
-  id           Int          @id @default(autoincrement())
-  userId       String       @unique
+  id           Int           @id @default(autoincrement())
+  userId       String        @unique
   name         String
   passwordHash String
-  role         Role         @default(EMPLOYEE)
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
+  role         Role          @default(EMPLOYEE)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   attendances  Attendance[]
+  healthChecks HealthCheck[]
 }
 
 enum Role {
@@ -39,3 +40,16 @@ model Attendance {
 
   @@index([employeeId, occurredAt])
 }
+
+model HealthCheck {
+  id         Int      @id @default(autoincrement())
+  employeeId Int
+  user       User     @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  health     Int
+  motivation Int
+  recordedAt DateTime @default(now())
+
+  @@index([employeeId, recordedAt])
+}
+
+
