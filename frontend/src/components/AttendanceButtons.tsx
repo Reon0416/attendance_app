@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { resisterAttendance } from "../api/attendance";
-import type { AttendanceActionType } from "../types";
+import type { AttendanceActionType, ConditionData } from "../types";
+import { ConditionInput } from "./ConditionInput";
 import "./style/AttendanceButtons.css";
 
 type AttendanceStatus =
@@ -9,11 +10,24 @@ type AttendanceStatus =
   | "BREAKING"
   | "AFTER_BREAK";
 
+
 export function AttendanceButtons() {
   // ボタン押下からAPIのreturnまでのボタンの制御
   const [loading, setLoading] = useState<AttendanceActionType | "">("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<AttendanceStatus>("INITIAL");
+  const [ condition, setCondition ] = useState<ConditionData>({
+    health: 0,
+    motivation: 0,
+  });
+
+  // conditonステートを更新する関数
+  const handleConditionChange = (name: keyof ConditionData, value: number) => {
+    setCondition((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleClick = async (action: AttendanceActionType) => {
     setLoading(action);
@@ -27,6 +41,7 @@ export function AttendanceButtons() {
 
       switch (action) {
         case "CLOCK_IN":
+          // await healthRecordInput(condition);
           setStatus("AFTER_CLOCK_IN");
           setMessage(`出勤を記録しました (${hours}:${minutes})`);
           break;
@@ -81,6 +96,9 @@ export function AttendanceButtons() {
       <div className="attendance-card">
         <div className="status-header">
           <h2 className="status-title">{statusLabel}</h2>
+          {status === "INITIAL" && (
+            <ConditionInput data={condition} onDataChange={handleConditionChange} />
+          )}
           <p className="status-message">{message}</p>
         </div>
 

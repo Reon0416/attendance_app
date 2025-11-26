@@ -1,19 +1,27 @@
-.main-container {
+.page-wrapper {
   min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
   background: #f3f4f6;
+}
+
+.main-content-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
   padding: 20px;
 }
 
 .card {
   width: 100%;
-  max-width: 900px;
+  min-width: 600px;
   background: #fff;
-  padding: 20px 24px;
+  padding: 12px;
+  margin: 12px 240px;
   border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .username {
@@ -28,7 +36,6 @@
 .clock-area {
   display: flex;
   justify-content: center;
-  margin-bottom: 16px;
 }
 
 .attendance-buttons-wrapper {
@@ -37,21 +44,4 @@
   gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 16px;
-}
-
-.logout-button {
-  width: 100%;
-  padding: 10px 0;
-  background: #4b5563;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.logout-button:hover {
-  background: #374151;
 }

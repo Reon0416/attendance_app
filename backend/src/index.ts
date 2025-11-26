@@ -3,7 +3,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { loginHandler, authMiddleware, meHandler, logoutHandler } from "./auth";
-import { resisterAttendanceHandler } from "./attendance";
+import { resisterAttendanceHandler, getMonthlyAttendanceHandler } from "./attendance";
 
 const app = express();
 const PORT = process.env.PORT
@@ -13,7 +13,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "http://localhost:5174",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
@@ -33,6 +33,9 @@ app.post("/api/auth/logout", authMiddleware, logoutHandler);
 
 // 勤怠情報登録
 app.post("/api/attendance/resister", authMiddleware, resisterAttendanceHandler);
+
+//勤怠情報取得
+app.get("/api/attendance/getAttendanceHistory", authMiddleware, getMonthlyAttendanceHandler);
 
 
 

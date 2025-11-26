@@ -7,4 +7,20 @@ export type User = {
   role: Role;
 };
 
-export type AttendanceActionType = "CLOCK_IN" | "CLOCK_OUT" | "BREAK_START" | "BREAK_END";
+export type AttendanceRecord = {
+  id: number;
+  employeeId: number;
+  action: AttendanceActionType;
+  occurredAt: string;
+};
+
+export type AttendanceActionType =
+  | "CLOCK_IN"
+  | "CLOCK_OUT"
+  | "BREAK_START"
+  | "BREAK_END";
+
+export type ConditionData = {
+  health: number;
+  motivation: number;
+};

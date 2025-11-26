@@ -1,9 +1,10 @@
 import LoginPage from "./pages/LoginPage";
 import EmployeeAttendance from "./pages/EmployeeAttendance";
 import OwnerDashboard from "./pages/OwnerDash";
-import { Route, Routes, Navigate, Link } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
+import HistoryAttendance from './pages/HistoryAttendance';
 import type { User } from "./types";
 
 function App() {
@@ -55,6 +56,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/history"
+          element={
+            <ProtectedRoute user={user}>
+              <HistoryAttendance onLogout={handleLogout} />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/"
@@ -69,6 +78,7 @@ function App() {
             )
           }
         />
+
       </Routes>
     </div>
   );

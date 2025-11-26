@@ -1,0 +1,99 @@
+.attendance-history {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-top: 20px;
+}
+
+.attendance-history h2 {
+  font-size: 1.5rem;
+  color: #333;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+.refresh-button {
+  float: right;
+  background: none;
+  border: 1px solid #ccc;
+  color: #666;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+  margin-top: 5px;
+}
+
+.refresh-button:hover {
+  background-color: #f0f0f0;
+}
+
+.history-status {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.history-status.error {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.work-day-group {
+  margin-top: 25px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.work-day-title {
+  background-color: #f8f8f8;
+  color: #333;
+  padding: 10px 15px;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  background-color: #fff;
+}
+
+.history-table thead th {
+  background-color: #eef;
+  color: #333;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #ddd;
+}
+
+.history-table tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+}
+
+.history-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.history-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.history-table tbody td {
+  padding: 10px 15px;
+}
+
+.action-clock_in td {
+  color: #007bff;
+  font-weight: 600;
+}
