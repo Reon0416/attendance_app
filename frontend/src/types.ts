@@ -37,3 +37,16 @@ export type GetHealthRecord = {
     motivation: number;
     recordedAt: string;
 };
+
+// パスワード更新のリクエストボディ
+export type PasswordUpdateBody = {
+  currentPassword: string;
+  newPassword: string;
+  newPasswordConfirm: string;
+};
+
+// ユーザーID更新のリクエストボディ
+export type UserIdUpdateBody = {
+  currentPassword: string;
+  newUserId: string;
+};

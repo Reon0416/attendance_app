@@ -9,7 +9,7 @@ type ConditionInputProps = {
 export function ConditionInput({ data, onDataChange }: ConditionInputProps) {
   return (
     <div className="condition-input-container">
-      <h3>今日のコンディションを入力してください (0: 良好, -10: 不良)</h3>
+      <h3>今日のコンディションを入力してください (5: 良好, -5: 不良)</h3>
 
       <div className="slider-group">
         <label htmlFor="health">体調: {data.health}</label>
@@ -18,8 +18,8 @@ export function ConditionInput({ data, onDataChange }: ConditionInputProps) {
           <input
             id="health"
             type="range"
-            min="-10"
-            max="0"
+            min="-5"
+            max="5"
             step="1"
             value={data.health}
             onChange={(e) => onDataChange("health", Number(e.target.value))}
@@ -36,8 +36,8 @@ export function ConditionInput({ data, onDataChange }: ConditionInputProps) {
           <input
             id="motivation"
             type="range"
-            min="-10"
-            max="0"
+            min="-5"
+            max="5"
             step="1"
             value={data.motivation}
             onChange={(e) => onDataChange("motivation", Number(e.target.value))}

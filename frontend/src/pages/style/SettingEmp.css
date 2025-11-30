@@ -1,0 +1,55 @@
+.settings-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+.settings-container h1 {
+    font-size: 28px;
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 0;
+}
+
+.tab-buttons {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    padding: 12px 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: #666;
+    border: 1px solid transparent;
+    border-bottom: none;
+    transition: all 0.2s;
+    background-color: #f7f7f7;
+    margin-bottom: -1px;
+}
+
+.tab-button:hover:not(.active) {
+    background-color: #ececec;
+}
+
+.tab-button.active {
+    color: white;
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+    border-radius: 8px 8px 0 0;
+    font-weight: 600;
+}
+
+.tab-content {
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 20px;
+    background: #fcfcfc;
+}

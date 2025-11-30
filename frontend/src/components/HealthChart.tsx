@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  ReferenceLine,
 } from "recharts";
 
 import "./style/HelthChart.css";
@@ -68,7 +69,7 @@ export function HealthChart() {
       className="health-chart-container"
       style={{ width: "100%", height: 350 }}
     >
-      <h3>今月の体調・モチベーション推移 (0: 良好 / -10: 不良)</h3>
+      <h3>今月の体調・モチベーション推移 (5: 良好 / -5: 不良)</h3>
 
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
@@ -80,10 +81,13 @@ export function HealthChart() {
           <XAxis dataKey="dateLabel" />
 
           <YAxis
-            domain={[-10, 0]}
+            domain={[-5, 5]}
             allowDecimals={false}
+            ticks={[-5, 0, 5]}
             label={{ value: "スコア", angle: -90, position: "insideLeft" }}
           />
+
+          <ReferenceLine y={0} stroke="#808080" strokeWidth={2} strokeDasharray="3 3" />
 
           <Tooltip />
 

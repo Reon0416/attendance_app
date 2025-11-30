@@ -73,11 +73,14 @@ app.put(
 
 // ユーザーIDの更新
 app.put(
-  "/api/setting/password",
+  "/api/setting/userId",
   authMiddleware,
   verifyPasswordMiddleware,
   updateUserIdHandler
 );
+
+
+
 
 // 動作確認用
 app.get("/", (req, res) => {

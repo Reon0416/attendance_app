@@ -1,6 +1,7 @@
 import LoginPage from "./pages/LoginPage";
 import EmployeeAttendance from "./pages/EmployeeAttendance";
 import OwnerDashboard from "./pages/OwnerDash";
+import SettingEmp from "./pages/SettingEmp";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -66,10 +67,18 @@ function App() {
           }
         />
         <Route
-          path="/Health"
+          path="/health"
           element={
             <ProtectedRoute user={user}>
               <HealthRecord onLogout={handleLogout} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/setting"
+          element={
+            <ProtectedRoute user={user}>
+              <SettingEmp onLogout={handleLogout} />
             </ProtectedRoute>
           }
         />
