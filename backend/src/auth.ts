@@ -1,4 +1,4 @@
-import type { Request, Response, NextFunction } from "express";
+import type { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { prisma } from "./prismaClient";
@@ -81,27 +81,6 @@ export async function loginHandler(req: Request, res: Response) {
     name: user.name,
     role: user.role,
   });
-}
-
-/**
- * JWTを検証して req.user にペイロードを入れるミドルウェア
- * 認証が必要なAPIの前に挟んで使う
- */
-export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
-  const token = req.cookies.access_token; // CookieからJWTトークンを取り出す
-
-  if (!token) {
-    return res.status(401).json({ message: "未ログインです" });
-  }
-
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
-    req.user = decoded;
-    next();
-  } catch (err) {
-    console.error("JWT verify error:", err);
-    return res.status(401).json({ message: "トークンが無効です" });
-  }
 }
 
 /**

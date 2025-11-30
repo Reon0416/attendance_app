@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { AttendanceAction } from "@prisma/client";
 import { prisma } from "./prismaClient";
-import { AuthRequest } from "./auth";
+import { AuthRequest } from "./middlewares/authMiddleware";
 
 
 /** 勤怠情報の登録*/

@@ -2,12 +2,21 @@ import "dotenv/config";
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import { loginHandler, authMiddleware, meHandler, logoutHandler } from "./auth";
-import { resisterAttendanceHandler, getMonthlyAttendanceHandler } from "./attendance";
-import { resisterHealthRecordHandler, getHealthRecordsHandler } from "./healthCheck";
+import { loginHandler, meHandler, logoutHandler } from "./auth";
+import {
+  resisterAttendanceHandler,
+  getMonthlyAttendanceHandler,
+} from "./attendance";
+import {
+  resisterHealthRecordHandler,
+  getHealthRecordsHandler,
+} from "./healthCheck";
+import { authMiddleware } from "./middlewares/authMiddleware";
+import { verifyPasswordMiddleware } from "./middlewares/verifyPasswordMiddleware";
+import { updatePasswordHandler, updateUserIdHandler } from "./setting";
 
 const app = express();
-const PORT = process.env.PORT
+const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(cookieParser());
@@ -18,8 +27,6 @@ app.use(
     credentials: true,
   })
 );
-
-
 
 // ルーティング‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 
@@ -36,15 +43,41 @@ app.post("/api/auth/logout", authMiddleware, logoutHandler);
 app.post("/api/attendance/resister", authMiddleware, resisterAttendanceHandler);
 
 //勤怠情報取得
-app.get("/api/attendance/getAttendanceHistory", authMiddleware, getMonthlyAttendanceHandler);
+app.get(
+  "/api/attendance/getAttendanceHistory",
+  authMiddleware,
+  getMonthlyAttendanceHandler
+);
 
 // 体調記録
-app.post("/api/healthCheck/resister", authMiddleware, resisterHealthRecordHandler);
+app.post(
+  "/api/healthCheck/resister",
+  authMiddleware,
+  resisterHealthRecordHandler
+);
 
-app.get("/api/healthCheck/getHealthRecords", authMiddleware, getHealthRecordsHandler);
+// 体調データ取得
+app.get(
+  "/api/healthCheck/getHealthRecords",
+  authMiddleware,
+  getHealthRecordsHandler
+);
 
+// パスワードの更新
+app.put(
+  "/api/setting/password",
+  authMiddleware,
+  verifyPasswordMiddleware,
+  updatePasswordHandler
+);
 
-
+// ユーザーIDの更新
+app.put(
+  "/api/setting/password",
+  authMiddleware,
+  verifyPasswordMiddleware,
+  updateUserIdHandler
+);
 
 // 動作確認用
 app.get("/", (req, res) => {
