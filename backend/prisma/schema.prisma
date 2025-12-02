@@ -17,6 +17,7 @@ model User {
   updatedAt    DateTime      @updatedAt
   attendances  Attendance[]
   healthChecks HealthCheck[]
+  goals        Goal[]
 }
 
 enum Role {
@@ -52,4 +53,23 @@ model HealthCheck {
   @@index([employeeId, recordedAt])
 }
 
+model Rate {
+  id            Int      @id @default(autoincrement())
+  hourlyRate    Float
+  lateNightRate Float
+  createdAt     DateTime @default(now())
+}
 
+model Goal {
+  id           Int      @id @default(autoincrement())
+  employeeId   Int
+  user         User     @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  targetAmount Float
+  description  String
+  isActive     Boolean  @default(true)
+  isAchieved   Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([employeeId, createdAt])
+}

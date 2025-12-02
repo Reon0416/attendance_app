@@ -1,6 +1,13 @@
-import { useState } from "react";
-import { resisterAttendance } from "../api/attendance";
-import type { AttendanceActionType, ConditionData } from "../types";
+import { useState, useEffect } from "react";
+import {
+  resisterAttendance,
+  getLatestAttendanceRecord,
+} from "../api/attendance";
+import type {
+  AttendanceActionType,
+  ConditionData,
+  LatestAttendanceRecord,
+} from "../types";
 import { ConditionInput } from "./ConditionInput";
 import { resisterHealthRecord } from "../api/healthCheck";
 import "./style/AttendanceButtons.css";
@@ -11,16 +18,49 @@ type AttendanceStatus =
   | "BREAKING"
   | "AFTER_BREAK";
 
+const determineStatus = (
+  records: LatestAttendanceRecord[]
+): AttendanceStatus => {
+  if (records.length === 0) {
+    return "INITIAL";
+  }
+
+  const latestAction = records[0].action;
+
+  switch (latestAction) {
+    case "CLOCK_IN":
+      return "AFTER_CLOCK_IN";
+    case "BREAK_START":
+      return "BREAKING";
+    case "BREAK_END":
+      return "AFTER_BREAK";
+    case "CLOCK_OUT":
+      return "INITIAL";
+    default:
+      return "INITIAL";
+  }
+};
 
 export function AttendanceButtons() {
   // ボタン押下からAPIのreturnまでのボタンの制御
   const [loading, setLoading] = useState<AttendanceActionType | "">("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<AttendanceStatus>("INITIAL");
-  const [ condition, setCondition ] = useState<ConditionData>({
+  const [condition, setCondition] = useState<ConditionData>({
     health: 0,
     motivation: 0,
   });
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+
+  useEffect(() => {
+    const loadStatus = async () => {
+      const records = await getLatestAttendanceRecord();
+      const newStatus = determineStatus(records);
+      setStatus(newStatus);
+      setIsInitialLoading(false);
+    };
+    loadStatus();
+  }, []);
 
   // conditonステートを更新する関数
   const handleConditionChange = (name: keyof ConditionData, value: number) => {
@@ -66,12 +106,12 @@ export function AttendanceButtons() {
     }
   };
 
-  const isClockInDisabled = loading !== "" || status !== "INITIAL";
+  const isClockInDisabled = loading !== "" || status !== "INITIAL" || isInitialLoading;
   const isBreakStartDisabled =
-    loading !== "" || (status !== "AFTER_BREAK" && status !== "AFTER_CLOCK_IN");
-  const isBreakEndDisabled = loading !== "" || status !== "BREAKING";
+    loading !== "" || (status !== "AFTER_BREAK" && status !== "AFTER_CLOCK_IN") || isInitialLoading;
+  const isBreakEndDisabled = loading !== "" || status !== "BREAKING" || isInitialLoading;
   const isClockOutDisabled =
-    loading !== "" || (status !== "AFTER_CLOCK_IN" && status !== "AFTER_BREAK");
+    loading !== "" || (status !== "AFTER_CLOCK_IN" && status !== "AFTER_BREAK") || isInitialLoading;
 
   let statusLabel = "";
 
@@ -98,7 +138,10 @@ export function AttendanceButtons() {
         <div className="status-header">
           <h2 className="status-title">{statusLabel}</h2>
           {status === "INITIAL" && (
-            <ConditionInput data={condition} onDataChange={handleConditionChange} />
+            <ConditionInput
+              data={condition}
+              onDataChange={handleConditionChange}
+            />
           )}
           <p className="status-message">{message}</p>
         </div>

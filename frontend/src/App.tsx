@@ -2,6 +2,7 @@ import LoginPage from "./pages/LoginPage";
 import EmployeeAttendance from "./pages/EmployeeAttendance";
 import OwnerDashboard from "./pages/OwnerDash";
 import SettingEmp from "./pages/SettingEmp";
+import PayrollDisplay from "./pages/PayrollEmp";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -79,6 +80,14 @@ function App() {
           element={
             <ProtectedRoute user={user}>
               <SettingEmp onLogout={handleLogout} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/payroll"
+          element={
+            <ProtectedRoute user={user}>
+              <PayrollDisplay onLogout={handleLogout} />
             </ProtectedRoute>
           }
         />

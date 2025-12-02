@@ -6,14 +6,19 @@ import { loginHandler, meHandler, logoutHandler } from "./auth";
 import {
   resisterAttendanceHandler,
   getMonthlyAttendanceHandler,
+  getLatestAttendanceRecordHandler,
 } from "./attendance";
 import {
   resisterHealthRecordHandler,
   getHealthRecordsHandler,
 } from "./healthCheck";
+import { setGoalHandler, getGoalProgressHandler } from "./goal";
+
+
 import { authMiddleware } from "./middlewares/authMiddleware";
 import { verifyPasswordMiddleware } from "./middlewares/verifyPasswordMiddleware";
 import { updatePasswordHandler, updateUserIdHandler } from "./setting";
+import { payrollHandler } from "./calculation";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -49,6 +54,13 @@ app.get(
   getMonthlyAttendanceHandler
 );
 
+// 最新の勤怠情報を一件取得
+app.get(
+  "/api/attendance/getLatestAttendanceHistory",
+  authMiddleware,
+  getLatestAttendanceRecordHandler
+);
+
 // 体調記録
 app.post(
   "/api/healthCheck/resister",
@@ -79,6 +91,14 @@ app.put(
   updateUserIdHandler
 );
 
+// 給与取得
+app.get("/api/calculation/payroll", authMiddleware, payrollHandler);
+
+// 目標の設定
+app.post("/api/goal/set", authMiddleware, setGoalHandler);
+
+// 進捗の取得
+app.get("/api/goal/progress", authMiddleware, getGoalProgressHandler)
 
 
 

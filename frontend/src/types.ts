@@ -50,3 +50,8 @@ export type UserIdUpdateBody = {
   currentPassword: string;
   newUserId: string;
 };
+
+export type LatestAttendanceRecord = {
+    action: AttendanceActionType;
+    occurredAt: string;
+};

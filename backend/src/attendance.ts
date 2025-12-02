@@ -2,10 +2,13 @@ import { Response } from "express";
 import { AttendanceAction } from "@prisma/client";
 import { prisma } from "./prismaClient";
 import { AuthRequest } from "./middlewares/authMiddleware";
-
+import { getMonthlyAttendanceRecords } from './services/attendanceService';
 
 /** 勤怠情報の登録*/
-export async function resisterAttendanceHandler(req: AuthRequest, res: Response) {
+export async function resisterAttendanceHandler(
+  req: AuthRequest,
+  res: Response
+) {
   const user = req.user;
 
   if (!user) {
@@ -28,51 +31,72 @@ export async function resisterAttendanceHandler(req: AuthRequest, res: Response)
     });
   }
 
-  try{
+  try {
     const attendance = await prisma.attendance.create({
-      data:{
+      data: {
         employeeId: user.id,
-        action: action as AttendanceAction
-      }
+        action: action as AttendanceAction,
+      },
     });
 
     return res.status(201).json(attendance);
-  }catch(error){
+  } catch (error) {
     console.error("登録できませんでした:", error);
     return res.status(500).json({ message: "勤怠情報の登録に失敗しました" });
   }
 }
 
 /** 今月の勤怠情報の取得 */
-export async function getMonthlyAttendanceHandler(req: AuthRequest, res: Response) {
+export async function getMonthlyAttendanceHandler(
+  req: AuthRequest,
+  res: Response
+) {
   const user = req.user;
 
   if (!user) {
     return res.status(401).json({ message: "認証情報が見つかりません" });
   }
 
-  const now = new Date();
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-
   try {
-    const attendanceRecords = await prisma.attendance.findMany({
-      where: {
-        employeeId: user.id,
-        occurredAt: { 
-          gte: startOfMonth, // 今月1日 00:00:00 以上
-          lt: endOfMonth,    // 来月1日 00:00:00 未満
-        },
-      },
-      orderBy: {
-        occurredAt: 'desc',// 降順
-      },
-    });
-
+    const attendanceRecords = await getMonthlyAttendanceRecords(user.id);
     return res.status(200).json(attendanceRecords);
-
   } catch (error) {
     console.error("打刻履歴の取得に失敗しました:", error);
-    return res.status(500).json({ message: "打刻履歴の取得中にサーバーエラーが発生しました" });
+    return res
+      .status(500)
+      .json({ message: "打刻履歴の取得中にサーバーエラーが発生しました" });
+  }
+}
+
+/** 一番最新の勤怠データを取得する */
+export async function getLatestAttendanceRecordHandler(
+  req: AuthRequest,
+  res: Response
+) {
+  const user = req.user;
+
+  if (!user) {
+    return res.status(401).json({ message: "認証情報が見つかりません" });
+  }
+
+  try {
+    const latestRecord = await prisma.attendance.findFirst({
+      where: {
+        employeeId: user.id,
+      },
+      orderBy: {
+        occurredAt: "desc",
+      },
+      select: {
+        action: true,
+        occurredAt: true,
+      }
+    });
+
+    const records = latestRecord ? [latestRecord] : [];
+    return res.status(200).json(records);
+  } catch (error) {
+    console.error("Failed to fetch latest attendance record:", error);
+        return res.status(500).json({ message: "最新の勤怠記録の取得中にサーバーエラーが発生しました" });
   }
 }
