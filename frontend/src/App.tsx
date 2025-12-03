@@ -9,6 +9,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import HistoryAttendance from './pages/HistoryAttendance';
 import type { User } from "./types";
 import HealthRecord from "./pages/HealthRecord";
+import { GoalEmp } from "./pages/Goalemp";
 
 function App() {
   const { user, initialLoading, handleLoginSuccess, error, handleLogout } =
@@ -88,6 +89,14 @@ function App() {
           element={
             <ProtectedRoute user={user}>
               <PayrollDisplay onLogout={handleLogout} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/goal"
+          element={
+            <ProtectedRoute user={user}>
+              <GoalEmp onLogout={handleLogout} />
             </ProtectedRoute>
           }
         />

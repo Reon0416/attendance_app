@@ -55,3 +55,25 @@ export type LatestAttendanceRecord = {
     action: AttendanceActionType;
     occurredAt: string;
 };
+
+// 目標設定リクエストの型
+export type GoalSetBody = {
+  targetAmount: number;
+  description: string;
+}
+
+// 目標設定レスポンスの型
+export type GoalSetResponse = {
+    message: string;
+};
+
+// 進捗取得レスポンスの型
+export type GoalProgressResponse = {
+  target: { targetAmount: number, description: string, createdAt: string } | null;
+  earnedAmount: number;
+  progressPercent: number;
+  neededAmount: number;
+  isCompleted: boolean;
+  message: string;
+}
+
