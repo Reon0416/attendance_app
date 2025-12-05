@@ -12,15 +12,20 @@ export interface GroupedAttendance {
  */
 const getWorkDayKey = (occurredAt: string): string => {
   const date = new Date(occurredAt);
-  const hour = date.getHours();
 
-  if (hour >= 0 && hour < 5) {
-    const previousDay = new Date(date);
-    previousDay.setDate(date.getDate() - 1);
+  const jstOffset = 9 * 60 * 60 * 1000;
+  const localDate = new Date(date.getTime() + jstOffset);
+
+  const localHour = localDate.getUTCHours();
+  const CUTOFF_HOUR = 5;
+
+if (localHour < CUTOFF_HOUR) {
+    const previousDay = new Date(localDate);
+    previousDay.setUTCDate(localDate.getUTCDate() - 1);
     return previousDay.toISOString().split("T")[0];
   }
 
-  return date.toISOString().split("T")[0];
+  return localDate.toISOString().split("T")[0];
 };
 
 export const useAttendanceHistory = () => {

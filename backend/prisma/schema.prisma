@@ -8,16 +8,17 @@ datasource db {
 }
 
 model User {
-  id           Int           @id @default(autoincrement())
-  userId       String        @unique
-  name         String
-  passwordHash String
-  role         Role          @default(EMPLOYEE)
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  attendances  Attendance[]
-  healthChecks HealthCheck[]
-  goals        Goal[]
+  id              Int              @id @default(autoincrement())
+  userId          String           @unique
+  name            String
+  passwordHash    String
+  role            Role             @default(EMPLOYEE)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  attendances     Attendance[]
+  healthChecks    HealthCheck[]
+  goals           Goal[]
+  healthAlertLogs HealthAlertLog[]
 }
 
 enum Role {
@@ -72,4 +73,16 @@ model Goal {
   updatedAt    DateTime @updatedAt
 
   @@index([employeeId, createdAt])
+}
+
+model HealthAlertLog {
+  id          Int      @id @default(autoincrement())
+  employeeId  Int
+  user        User     @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  alertType   String
+  totalPoints Int
+  loggedAt    DateTime @default(now())
+  isChecked   Boolean  @default(false)
+
+  @@index([employeeId, loggedAt])
 }

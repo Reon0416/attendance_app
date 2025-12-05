@@ -7,6 +7,7 @@ import type {
   AttendanceActionType,
   ConditionData,
   LatestAttendanceRecord,
+  HealthRecordResponse,
 } from "../types";
 import { ConditionInput } from "./ConditionInput";
 import { resisterHealthRecord } from "../api/healthCheck";
@@ -45,6 +46,7 @@ export function AttendanceButtons() {
   // ボタン押下からAPIのreturnまでのボタンの制御
   const [loading, setLoading] = useState<AttendanceActionType | "">("");
   const [message, setMessage] = useState("");
+  const [alert, setAlert] = useState("");
   const [status, setStatus] = useState<AttendanceStatus>("INITIAL");
   const [condition, setCondition] = useState<ConditionData>({
     health: 0,
@@ -80,9 +82,17 @@ export function AttendanceButtons() {
       const hours = String(date.getHours()).padStart(2, "0");
       const minutes = String(date.getMinutes()).padStart(2, "0");
 
+      let alertMsgSuffix = "";
+
       switch (action) {
         case "CLOCK_IN":
-          await resisterHealthRecord(condition);
+          const healthResponse: HealthRecordResponse =
+            await resisterHealthRecord(condition);
+
+          if (healthResponse.isAlert && healthResponse.alertMessage) {
+            alertMsgSuffix = `${healthResponse.alertMessage}`;
+          }
+          setAlert(`${alertMsgSuffix}`);
           setStatus("AFTER_CLOCK_IN");
           setMessage(`出勤を記録しました (${hours}:${minutes})`);
           break;
@@ -106,12 +116,18 @@ export function AttendanceButtons() {
     }
   };
 
-  const isClockInDisabled = loading !== "" || status !== "INITIAL" || isInitialLoading;
+  const isClockInDisabled =
+    loading !== "" || status !== "INITIAL" || isInitialLoading;
   const isBreakStartDisabled =
-    loading !== "" || (status !== "AFTER_BREAK" && status !== "AFTER_CLOCK_IN") || isInitialLoading;
-  const isBreakEndDisabled = loading !== "" || status !== "BREAKING" || isInitialLoading;
+    loading !== "" ||
+    (status !== "AFTER_BREAK" && status !== "AFTER_CLOCK_IN") ||
+    isInitialLoading;
+  const isBreakEndDisabled =
+    loading !== "" || status !== "BREAKING" || isInitialLoading;
   const isClockOutDisabled =
-    loading !== "" || (status !== "AFTER_CLOCK_IN" && status !== "AFTER_BREAK") || isInitialLoading;
+    loading !== "" ||
+    (status !== "AFTER_CLOCK_IN" && status !== "AFTER_BREAK") ||
+    isInitialLoading;
 
   let statusLabel = "";
 
@@ -144,6 +160,7 @@ export function AttendanceButtons() {
             />
           )}
           <p className="status-message">{message}</p>
+          <p className="alert-message">{alert}</p>
         </div>
 
         <div className="button-grid">

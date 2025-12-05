@@ -14,6 +14,14 @@ export type AttendanceRecord = {
   occurredAt: string;
 };
 
+// resisterHealthRecordのレスポンス
+export type HealthRecordResponse = {
+  message: string;
+  recordedAt: string;
+  isAlert?: boolean;
+  alertMessage?: string;
+};
+
 export type AttendanceActionType =
   | "CLOCK_IN"
   | "CLOCK_OUT"

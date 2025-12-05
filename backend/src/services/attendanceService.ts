@@ -10,7 +10,7 @@ export async function getMonthlyAttendanceRecords(
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
   const startOfNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
   const endOfFilterPeriod = new Date(
-    startOfNextMonth.getTime() + 4 * 60 * 60 * 1000
+    startOfNextMonth.getTime() + 5 * 60 * 60 * 1000
   );
 
   const records = await prisma.attendance.findMany({

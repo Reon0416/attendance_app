@@ -11,7 +11,6 @@
   padding: px;
 }
 
-
 .status-header {
   text-align: center;
   border-bottom: 1px solid #e5e7eb;
@@ -31,6 +30,12 @@
   color: #6b7280;
 }
 
+.alert-message {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #f60606;
+}
 
 .button-grid {
   display: flex;
@@ -49,7 +54,6 @@
   cursor: pointer;
   transition: 0.2s;
 }
-
 
 .btn-clock-in {
   background: #4f46e5;
