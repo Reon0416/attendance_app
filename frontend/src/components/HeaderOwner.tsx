@@ -1,21 +1,19 @@
 import { NavLink } from "react-router-dom";
 import "./style/Header.css"
 
-type HeaderEmpProps = {
+type HeaderOwnerProps = {
   onLogout: () => void;
 };
 
-export function HeaderEmp({ onLogout }: HeaderEmpProps) {
+export function HeaderOwner({ onLogout }: HeaderOwnerProps) {
   return (
     <header className="header-emp">
       <p>勤怠管理</p>
       <div className="nav-wrapper">
         <nav className="header-nav">
-          <NavLink to="/employee">打刻</NavLink>
-          <NavLink to="/health">健康管理</NavLink>
-          <NavLink to="/payroll">給与</NavLink>
-          <NavLink to="/history">勤怠履歴</NavLink>
-          <NavLink to="/setting">設定</NavLink>
+          <NavLink to="/employee">体調管理</NavLink>
+          <NavLink to="/health">勤怠管理</NavLink>
+          <NavLink to="/payroll">設定</NavLink>
         </nav>
 
         <button className="logout-button" onClick={onLogout}>

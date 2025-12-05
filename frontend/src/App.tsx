@@ -70,7 +70,7 @@ function App() {
           path="/owner"
           element={
             <ProtectedRoute user={user}>
-              <OwnerDashboard user={user as User} onLogout={handleLogout} />
+              <OwnerDashboard  onLogout={handleLogout} />
             </ProtectedRoute>
           }
         />
