@@ -1,0 +1,135 @@
+.login-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafb;
+  padding: 16px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 448px;
+  background-color: #ffffff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.login-header {
+  font-size: 30px;
+  font-weight: 800;
+  color: #111827;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+}
+
+.login-header span {
+  color: #4f46e5;
+}
+
+.login-form {
+  margin: 12px 0;
+}
+
+.login-form label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.login-form input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  color: #111827;
+  transition: all 0.15s ease-in-out;
+}
+
+.login-form input:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px #6366f1, 0 0 0 1px #6366f1;
+  border-color: #6366f1;
+}
+
+.login-error-message {
+  font-size: 14px;
+  color: #dc2626;
+  background-color: #fef2f2;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #fecaca;
+  text-align: center;
+}
+
+.login-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  font-size: 24px;
+  font-weight: 500;
+  color: white;
+  transition: all 0.2s ease-in-out;
+}
+
+.login-button:not(:disabled) {
+  background-color: #4f46e5;
+}
+
+.login-button:not(:disabled):hover {
+  background-color: #4338ca;
+  transform: scale(1.01);
+}
+
+.login-button:not(:disabled):focus {
+  outline: none;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px #6366f1;
+}
+
+.login-button:disabled {
+  background-color: #818cf8;
+  cursor: not-allowed;
+}
+
+.account-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  box-shadow: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  background-color: #6b7280;
+  margin-top: 8px;
+}
+
+.account-button:hover {
+  background-color: #4b5563;
+  transform: none;
+}
+
+.account-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px #6366f1;
+}

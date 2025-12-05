@@ -3,17 +3,20 @@ import EmployeeAttendance from "./pages/EmployeeAttendance";
 import OwnerDashboard from "./pages/OwnerDash";
 import SettingEmp from "./pages/SettingEmp";
 import PayrollDisplay from "./pages/PayrollEmp";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
-import HistoryAttendance from './pages/HistoryAttendance';
+import HistoryAttendance from "./pages/HistoryAttendance";
+import CreateAccount from "./pages/CreateAccount";
 import type { User } from "./types";
 import HealthRecord from "./pages/HealthRecord";
-import { GoalEmp } from "./pages/Goalemp";
 
 function App() {
   const { user, initialLoading, handleLoginSuccess, error, handleLogout } =
     useAuth();
+
+  const navigate = useNavigate();
+  const navigateToRegister = () => navigate("/account");
 
   if (initialLoading) {
     return (
@@ -25,7 +28,6 @@ function App() {
 
   return (
     <div className="font-sans">
-      
       {error && (
         <div className="p-3 bg-red-100 border border-red-400 text-red-700 text-center font-medium">
           {error}
@@ -39,11 +41,23 @@ function App() {
             user ? (
               <Navigate to="/" replace />
             ) : (
-              <LoginPage onLogin={handleLoginSuccess} />
+              <LoginPage
+                onLogin={handleLoginSuccess}
+                onNavigateToRegister={navigateToRegister}
+              />
             )
           }
         />
-
+        <Route
+          path="/account"
+          element={
+            user ? (
+              <Navigate to="/" replace />
+            ) : (
+              <CreateAccount/>
+            )
+          }
+        />
         <Route
           path="/employee"
           element={
@@ -93,15 +107,6 @@ function App() {
           }
         />
         <Route
-          path="/goal"
-          element={
-            <ProtectedRoute user={user}>
-              <GoalEmp onLogout={handleLogout} />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
           path="/"
           element={
             user ? (
@@ -114,7 +119,6 @@ function App() {
             )
           }
         />
-
       </Routes>
     </div>
   );

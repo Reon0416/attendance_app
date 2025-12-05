@@ -7,3 +7,10 @@ export type AttendanceRecord = {
   occurredAt: Date;
 };
 
+// ユーザー登録リクエストボディの型
+export type AccountRegisterBody = {
+  userId: string;
+  name: string;
+  password: string;
+  role: "EMPLOYEE" | "OWNER";
+};

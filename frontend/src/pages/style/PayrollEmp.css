@@ -1,0 +1,23 @@
+.pay-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.goal-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.payroll-card {
+    flex: 1;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}

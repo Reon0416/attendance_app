@@ -13,7 +13,7 @@ import {
   getHealthRecordsHandler,
 } from "./healthCheck";
 import { setGoalHandler, getGoalProgressHandler } from "./goal";
-
+import { accountRegisterHandler } from "./account";
 
 import { authMiddleware } from "./middlewares/authMiddleware";
 import { verifyPasswordMiddleware } from "./middlewares/verifyPasswordMiddleware";
@@ -37,6 +37,9 @@ app.use(
 
 // ログイン
 app.post("/api/auth/login", loginHandler);
+
+//アカウント新規作成
+app.post("/api/account/create", accountRegisterHandler);
 
 // ログイン中ユーザー情報
 app.get("/api/auth/me", authMiddleware, meHandler);

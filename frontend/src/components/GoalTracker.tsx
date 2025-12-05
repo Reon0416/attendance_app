@@ -11,22 +11,6 @@ type GoalTrackerProps = {
 const COLORS = ["#10b981", "#f3f4f6"];
 // const RADIAN = Math.PI / 180;
 
-// グラフの中央に達成率を表示する関数
-const renderProgressLabel = ({ cx, cy, percent }: any) => {
-  return (
-    <text
-      x={cx}
-      y={cy}
-      fill="#333"
-      textAnchor="middle"
-      dominantBaseline="central"
-      style={{ fontSize: "20px", fontWeight: "bold" }}
-    >
-      {`${(percent * 100).toFixed(0)}%`}
-    </text>
-  );
-};
-
 export function GoalTracker({ reloadKey }: GoalTrackerProps) {
   const [progressData, setProgressData] = useState<GoalProgressResponse | null>(
     null
@@ -77,7 +61,6 @@ export function GoalTracker({ reloadKey }: GoalTrackerProps) {
     <div className="goal-tracker-container">
       <div className="progress-display">
         <div className="goal-status-card">
-          <h2>目標達成トラッカー</h2>
           <h3 className="target-description">
             目標: {target.description} (¥{target.targetAmount.toLocaleString()})
           </h3>

@@ -31,11 +31,11 @@ export type HealthRecordBody = {
 };
 
 export type GetHealthRecord = {
-    id: number;
-    employeeId: number;
-    health: number;
-    motivation: number;
-    recordedAt: string;
+  id: number;
+  employeeId: number;
+  health: number;
+  motivation: number;
+  recordedAt: string;
 };
 
 // パスワード更新のリクエストボディ
@@ -52,28 +52,53 @@ export type UserIdUpdateBody = {
 };
 
 export type LatestAttendanceRecord = {
-    action: AttendanceActionType;
-    occurredAt: string;
+  action: AttendanceActionType;
+  occurredAt: string;
 };
 
 // 目標設定リクエストの型
 export type GoalSetBody = {
   targetAmount: number;
   description: string;
-}
+};
 
 // 目標設定レスポンスの型
 export type GoalSetResponse = {
-    message: string;
+  message: string;
 };
 
 // 進捗取得レスポンスの型
 export type GoalProgressResponse = {
-  target: { targetAmount: number, description: string, createdAt: string } | null;
+  target: {
+    targetAmount: number;
+    description: string;
+    createdAt: string;
+  } | null;
   earnedAmount: number;
   progressPercent: number;
   neededAmount: number;
   isCompleted: boolean;
   message: string;
-}
+};
 
+// リクエストボディの型
+export type AccountRegisterBody = {
+  userId: string;
+  name: string;
+  password: string;
+  role: "EMPLOYEE" | "OWNER";
+};
+
+// 成功レスポンスに含まれるユーザー情報の型（パスワードを除く）
+export type AccountRegisteredUser = {
+  id: number;
+  userId: string;
+  name: string;
+  role: "EMPLOYEE" | "OWNER";
+};
+
+// API成功時の応答型
+export type AccountRegisterResponse = {
+  message: string;
+  user: AccountRegisteredUser;
+};

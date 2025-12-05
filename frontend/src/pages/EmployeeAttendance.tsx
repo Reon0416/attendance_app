@@ -11,7 +11,7 @@ type Props = {
 
 function EmployeeAttendance({ user, onLogout }: Props) {
   return (
-    <div className="page-wrapper">
+    <div className="attendance-page-wrapper">
       <HeaderEmp onLogout={onLogout} />
       <div className="main-content-area">
         <div className="card">
