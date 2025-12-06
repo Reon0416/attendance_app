@@ -10,6 +10,7 @@ import HistoryAttendance from "./pages/HistoryAttendance";
 import CreateAccount from "./pages/CreateAccount";
 import type { User } from "./types";
 import HealthRecord from "./pages/HealthRecord";
+import SettingOwner from "./pages/SettingOwner";
 
 function App() {
   const { user, initialLoading, handleLoginSuccess, error, handleLogout } =
@@ -75,6 +76,14 @@ function App() {
           }
         />
         <Route
+          path="/settingOwner"
+          element={
+            <ProtectedRoute user={user}>
+              <SettingOwner onLogout={handleLogout} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/history"
           element={
             <ProtectedRoute user={user}>
@@ -91,7 +100,7 @@ function App() {
           }
         />
         <Route
-          path="/setting"
+          path="/settingEmp"
           element={
             <ProtectedRoute user={user}>
               <SettingEmp onLogout={handleLogout} />

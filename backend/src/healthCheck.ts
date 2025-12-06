@@ -3,7 +3,7 @@ import { Response } from "express";
 import { prisma } from "./prismaClient";
 
 const ROLLING_DAYS = 7;
-const BORDER_VALUE = 20;
+const BORDER_VALUE = 5;
 
 type HealthRecordBody = {
   health: number;
@@ -147,7 +147,7 @@ export async function resisterHealthRecordHandler(
       message: `体調記録を完了しました(${hours}:${minutes})`,
       isAlert: alertTriggered,
       recordedAt: recordResult.recordedAt,
-      alertMessage: alertMessages.join(" | "),
+      alertMessage: alertMessages.join(" "),
     });
   } catch (error) {
     console.error("Health record registration failed:", error);
@@ -164,6 +164,28 @@ export async function getHealthRecordsHandler(req: AuthRequest, res: Response) {
     return res.status(401).json({ message: "未ログインです" });
   }
 
+  // クエリパラメータから取得したいIDを取得
+  const targetEmployeeIdParam = req.query.employeeId;
+  const requestedId = targetEmployeeIdParam
+    ? Number(targetEmployeeIdParam)
+    : null;
+
+  // デフォルトでログインユーザーのIDを使用
+  let finalEmployeeId = user.id;
+
+  // 他人のデータを要求している場合はオーナーかどうかのチェック
+  if (requestedId !== null && requestedId !== user.id) {
+    if (user.role !== "OWNER") {
+      return res
+        .status(403)
+        .json({ message: "他者のデータ閲覧権限がありません。" });
+    }
+
+    finalEmployeeId = requestedId;
+  }
+
+  // requestedIdがnullの場合（従業員自身のページ）は、finalEmployeeIdはuser.idのまま
+
   /**
    * 今月の開始日と次月の開始日を計算してその間のデータを取得するようにする。
    * この方がインデックスを使うから速い。
@@ -177,7 +199,7 @@ export async function getHealthRecordsHandler(req: AuthRequest, res: Response) {
   try {
     const records = await prisma.healthCheck.findMany({
       where: {
-        employeeId: user.id,
+        employeeId: finalEmployeeId,
         recordedAt: {
           gte: startOfMonth, // Greater Than Equal
           lt: startOfNextMonth, // Less Than
@@ -199,5 +221,122 @@ export async function getHealthRecordsHandler(req: AuthRequest, res: Response) {
     return res
       .status(500)
       .json({ message: "データの取得中にエラーが発生しました。" });
+  }
+}
+
+/** isAlertLogからisCheckedがfalseのデータを返す関数 */
+export async function getAlertLogHandler(req: AuthRequest, res: Response) {
+  const user = req.user;
+
+  if (!user) {
+    return res.status(401).json({ message: "未ログインです" });
+  }
+
+  if (user.role !== "OWNER") {
+    return res
+      .status(403)
+      .json({ message: "この操作はオーナーのみ実行可能です" });
+  }
+
+  try {
+    const records = await prisma.healthAlertLog.findMany({
+      where: {
+        isChecked: false,
+      },
+      orderBy: {
+        loggedAt: "desc",
+      },
+      include: {
+        user: {
+          select: { name: true, userId: true },
+        },
+      },
+    });
+
+    return res.status(200).json(records);
+  } catch (error) {
+    console.error("Failed to fetch unchecked alert logs:", error);
+    return res
+      .status(500)
+      .json({ message: "アラートログの取得中にエラーが発生しました。" });
+  }
+}
+
+/** isAlertLogのisCheckedをtrueにする関数 */
+export async function updateAlertLogHandler(req: AuthRequest, res: Response) {
+  const user = req.user;
+
+  if (!user) {
+    return res.status(401).json({ message: "未ログインです" });
+  }
+
+  if (user.role !== "OWNER") {
+    return res
+      .status(403)
+      .json({ message: "この操作はオーナーのみ実行可能です" });
+  }
+
+  const { alertLogId } = req.body as { alertLogId: number };
+
+  if (!alertLogId) {
+    return res
+      .status(400)
+      .json({ message: "更新対象のアラートIDが指定されていません" });
+  }
+
+  try {
+    const updatedRecord = await prisma.healthAlertLog.update({
+      where: {
+        id: alertLogId,
+      },
+      data: {
+        isChecked: true,
+      },
+      select: {
+        id: true,
+        alertType: true,
+        isChecked: true,
+      },
+    });
+
+    return res.status(200).json({
+      messgage: `${updatedRecord.id}を確認済みにしました`,
+      record: updatedRecord,
+    });
+  } catch (error) {
+    console.error("Failed to update alert log:", error);
+    return res
+      .status(500)
+      .json({ message: "アラートログの更新中にエラーが発生しました。" });
+  }
+}
+
+/** 全従業員のリストを取得する関数 */
+export async function getEmployeeListHandler(req: AuthRequest, res: Response) {
+  const user = req.user;
+
+  if (!user) {
+    return res.status(401).json({ message: "未ログインです" });
+  }
+
+  try {
+    const employees = await prisma.user.findMany({
+      where: {
+        role: "EMPLOYEE"
+      },
+      orderBy: {
+        name: "asc"
+      },
+      select: {
+        id: true,
+        name: true,
+        userId: true,
+      }
+    });
+
+    return res.status(200).json(employees);
+  } catch (error) {
+    console.error("Failed to fetch employee list:", error);
+    return res.status(500).json({ message: "従業員リストの取得中にサーバーエラーが発生しました。" });
   }
 }

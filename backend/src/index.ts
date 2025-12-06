@@ -11,13 +11,16 @@ import {
 import {
   resisterHealthRecordHandler,
   getHealthRecordsHandler,
+  getEmployeeListHandler,
+  getAlertLogHandler,
+  updateAlertLogHandler,
 } from "./healthCheck";
 import { setGoalHandler, getGoalProgressHandler } from "./goal";
 import { accountRegisterHandler } from "./account";
 
 import { authMiddleware } from "./middlewares/authMiddleware";
 import { verifyPasswordMiddleware } from "./middlewares/verifyPasswordMiddleware";
-import { updatePasswordHandler, updateUserIdHandler } from "./setting";
+import { updatePasswordHandler, updateRateHandler, updateUserIdHandler } from "./setting";
 import { payrollHandler } from "./calculation";
 
 const app = express();
@@ -78,6 +81,15 @@ app.get(
   getHealthRecordsHandler
 );
 
+// アラートが出ている従業員情報を取得
+app.get("/api/healthCheck/getAlertLog", authMiddleware, getAlertLogHandler);
+
+// アラートが出ている従業員情報を更新
+app.put("/api/healthCheck/updateAlertLog", authMiddleware, updateAlertLogHandler);
+
+// 全従業員のリストを取得
+app.get("/api/healthCheck/employees", authMiddleware, getEmployeeListHandler);
+
 // パスワードの更新
 app.put(
   "/api/setting/password",
@@ -94,6 +106,9 @@ app.put(
   updateUserIdHandler
 );
 
+// 時給の更新
+app.put("/api/setting/rate", authMiddleware, updateRateHandler);
+
 // 給与取得
 app.get("/api/calculation/payroll", authMiddleware, payrollHandler);
 
@@ -101,9 +116,7 @@ app.get("/api/calculation/payroll", authMiddleware, payrollHandler);
 app.post("/api/goal/set", authMiddleware, setGoalHandler);
 
 // 進捗の取得
-app.get("/api/goal/progress", authMiddleware, getGoalProgressHandler)
-
-
+app.get("/api/goal/progress", authMiddleware, getGoalProgressHandler);
 
 // 動作確認用
 app.get("/", (req, res) => {

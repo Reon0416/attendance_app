@@ -16,6 +16,12 @@ type UserIdUpdateBody = {
   newUserId: string;
 };
 
+// RateUpdateBodyの型定義
+type RateUpdateBody = {
+  hourlyRate: number;
+  lateNightRate: number;
+};
+
 /**
  *  パスワードを新しい値に更新するハンドラー関数
  */
@@ -72,25 +78,78 @@ export async function updateUserIdHandler(req: AuthRequest, res: Response) {
   }
 
   try {
-
     // 新しいユーザーIDの重複チェック
     const existingUser = await prisma.user.findUnique({
       where: { userId: newUserId },
-      select: { id: true }
+      select: { id: true },
     });
 
-    if(existingUser && existingUser.id !== user.id) {
-      return res.status(409).json({ message: "そのユーザーIDは既に使用されています。" });
+    if (existingUser && existingUser.id !== user.id) {
+      return res
+        .status(409)
+        .json({ message: "そのユーザーIDは既に使用されています。" });
     }
 
     await prisma.user.update({
-        where: { id: user.id },
-        data: { userId: newUserId },
+      where: { id: user.id },
+      data: { userId: newUserId },
     });
 
-    return res.status(200).json({ message: "メールアドレスが正常に更新されました。", newUserId: newUserId });
+    return res.status(200).json({
+      message: "メールアドレスが正常に更新されました。",
+      newUserId: newUserId,
+    });
   } catch (error) {
     console.error("UserID update failed:", error);
-    return res.status(500).json({ message: "メールアドレスの更新中にエラーが発生しました。" });
+    return res
+      .status(500)
+      .json({ message: "メールアドレスの更新中にエラーが発生しました。" });
+  }
+}
+
+/**
+ * 新しい時給と深夜時給をRateテーブルに記録するハンドラー関数
+ */
+export async function updateRateHandler(req: AuthRequest, res: Response) {
+  const user = req.user!;
+  const { hourlyRate, lateNightRate } = req.body as RateUpdateBody;
+
+  if (user.role !== "OWNER") {
+    return res
+      .status(403)
+      .json({ message: "時給の更新はオーナーのみ実行可能です" });
+  }
+
+  if (
+    typeof hourlyRate !== "number" ||
+    typeof lateNightRate !== "number" ||
+    hourlyRate <= 0 ||
+    lateNightRate <= 0
+  ) {
+    return res
+      .status(400)
+      .json({ message: "有効な時給および深夜時給を入力してください。" });
+  }
+
+  try {
+    const updatedRate = await prisma.rate.update({
+      where: {
+        id: 1,
+      },
+      data: {
+        hourlyRate: hourlyRate,
+        lateNightRate: lateNightRate,
+      },
+    });
+
+    return res.status(200).json({
+      message: "新しい時給設定が正常に上書き更新されました。",
+      rate: updatedRate,
+    });
+  } catch (error) {
+    console.error("Rate update failed:", error);
+    return res
+      .status(500)
+      .json({ message: "時給の更新中にエラーが発生しました。" });
   }
 }

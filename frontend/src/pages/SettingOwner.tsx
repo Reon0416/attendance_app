@@ -1,16 +1,17 @@
-import { HeaderEmp } from "../components/HeaderEmp";
+import { HeaderOwner } from "../components/HeaderOwner";
 import { useState } from "react";
 import { PasswordSetting } from "../components/PasswordSetting";
 import { UserIdSetting } from "../components/UserIdSetting";
+import { RateSetting } from "../components/RateSetting";
 import "./style/Setting.css";
 
 type Props = {
   onLogout: () => void;
 };
 
-type ActiveTab = "password" | "userid";
+type ActiveTab = "password" | "userid" | "rate";
 
-function SettingEmp({ onLogout }: Props) {
+function SettingOwner({ onLogout }: Props) {
   const [activeTab, setActiveTab] = useState<ActiveTab>("password");
 
   const renderContent = () => {
@@ -19,6 +20,8 @@ function SettingEmp({ onLogout }: Props) {
         return <PasswordSetting />;
       case "userid":
         return <UserIdSetting />;
+      case "rate":
+        return <RateSetting />;
       default:
         return null;
     }
@@ -26,9 +29,9 @@ function SettingEmp({ onLogout }: Props) {
 
   return (
     <div>
-      <HeaderEmp onLogout={onLogout} />
+      <HeaderOwner onLogout={onLogout} />
       <div className="settings-container">
-        <h1>従業員設定</h1>
+        <h1>オーナー設定</h1>
         <div className="tab-buttons">
           <div
             className={`tab-button ${activeTab === "password" ? "active" : ""}`}
@@ -43,6 +46,13 @@ function SettingEmp({ onLogout }: Props) {
           >
             メールアドレス
           </div>
+
+          <div
+            className={`tab-button ${activeTab === "rate" ? "active" : ""}`}
+            onClick={() => setActiveTab("rate")}
+          >
+            時給
+          </div>
         </div>
         <div className="tab-content">{renderContent()}</div>
       </div>
@@ -50,4 +60,4 @@ function SettingEmp({ onLogout }: Props) {
   );
 }
 
-export default SettingEmp;
+export default SettingOwner;

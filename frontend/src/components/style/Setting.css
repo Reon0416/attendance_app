@@ -20,7 +20,8 @@
 }
 
 .setting-form-card input[type="password"],
-.setting-form-card input[type="email"] {
+.setting-form-card input[type="email"],
+.setting-form-card input[type="number"] {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;

@@ -20,13 +20,18 @@ type ChartData = {
   motivation: number;
 };
 
-export function HealthChart() {
+// オーナーが従業員番号を指定する際に必要
+type HealthChartProps = {
+  employeeId?: number;
+};
+
+export function HealthChart({employeeId}: HealthChartProps) {
   const [chartData, setChartData] = useState<ChartData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
-      const records = await getHealthRecords();
+      const records = await getHealthRecords(employeeId);
 
       // recordsをグラフ描画ライブラリに適した形式に変換
       const formattedData: ChartData[] = records.map((record) => {
@@ -48,7 +53,7 @@ export function HealthChart() {
     };
 
     loadData();
-  }, []);
+  }, [employeeId]);
 
   //----- レンダリング　-----
 

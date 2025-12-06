@@ -46,6 +46,24 @@ export type GetHealthRecord = {
   recordedAt: string;
 };
 
+// 従業員のリスト
+export type Employee = {
+  id: number;
+  name: string;
+  userId: string;
+};
+
+// サーバーから返されるアラートログの型
+export type AlertLog = {
+  id: number;
+  alertType: string;
+  totalPoints: number;
+  loggedAt: string;
+  isChecked: boolean;
+  user: { name: string; userId: string };
+};
+
+
 // パスワード更新のリクエストボディ
 export type PasswordUpdateBody = {
   currentPassword: string;
@@ -57,6 +75,20 @@ export type PasswordUpdateBody = {
 export type UserIdUpdateBody = {
   currentPassword: string;
   newUserId: string;
+};
+
+// 送信するデータの型
+export type RateUpdatePayload = {
+  hourlyRate: number;
+  lateNightRate: number;
+};
+
+// バックエンドから返されるレート情報 (確認用)
+export type NewRateResponse = {
+  id: number;
+  hourlyRate: number;
+  lateNightRate: number;
+  createdAt: string;
 };
 
 export type LatestAttendanceRecord = {
@@ -110,3 +142,4 @@ export type AccountRegisterResponse = {
   message: string;
   user: AccountRegisteredUser;
 };
+

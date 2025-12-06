@@ -59,6 +59,7 @@ model Rate {
   hourlyRate    Float
   lateNightRate Float
   createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
 }
 
 model Goal {

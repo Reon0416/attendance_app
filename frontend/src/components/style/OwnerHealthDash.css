@@ -1,0 +1,62 @@
+.owner-health-dashboard-container {
+  margin: 0;
+  flex: 2;
+  padding: 30px;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.12)
+}
+
+.owner-health-dashboard-container h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #3b82f6;
+  border-bottom: 2px solid #eff6ff;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+}
+
+.employee-select-form {
+  margin-bottom: 35px;
+  padding: 15px;
+  background-color: #e0f2fe;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.employee-select-form label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0b2e59;
+  flex-shrink: 0;
+}
+
+.employee-select-dropdown {
+    padding: 10px 15px;
+    border: 1px solid #93c5fd;
+    border-radius: 6px;
+    font-size: 15px;
+    background-color: white;
+    cursor: pointer;
+    flex-grow: 1;
+    min-width: 250px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.employee-select-dropdown:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+  outline: none;
+}
+
+.health-chart-display {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}

@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-// JWTの署名に使う秘密鍵（.env から読み込む）
+// JWTの署名に使う秘密鍵
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret-key";
 
 
