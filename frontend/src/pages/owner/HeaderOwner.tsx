@@ -11,7 +11,7 @@ export function HeaderOwner({ onLogout }: HeaderOwnerProps) {
       <p>勤怠管理</p>
       <div className="nav-wrapper">
         <nav className="header-nav">
-          <NavLink to="/owner">体調管理</NavLink>
+          <NavLink to="/owner" end>体調管理</NavLink>
           <NavLink to="/owner/table">従業員一覧テーブル</NavLink>
           <NavLink to="/owner/setting">設定</NavLink>
         </nav>
