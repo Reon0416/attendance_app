@@ -13,6 +13,7 @@ export async function resisterNewUser(
 ): Promise<AccountRegisterResponse> {
   const res = await fetch(`${API_BASE_URL}/api/setting/account`, {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
