@@ -11,7 +11,7 @@ export function HeaderEmp({ onLogout }: HeaderEmpProps) {
       <p>勤怠管理</p>
       <div className="nav-wrapper">
         <nav className="header-nav">
-          <NavLink to="/employee">打刻</NavLink>
+          <NavLink to="/employee" end>打刻</NavLink>
           <NavLink to="/employee/health">健康管理</NavLink>
           <NavLink to="/employee/payroll">給与</NavLink>
           <NavLink to="/employee/history">勤怠履歴</NavLink>
