@@ -93,7 +93,7 @@ export function EmployeeAccountSetting() {
           required
         />
 
-        <label>現在のパスワード</label>
+        <label>オーナーパスワード</label>
         <input
           type="password"
           value={currentPassword}

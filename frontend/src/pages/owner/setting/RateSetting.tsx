@@ -29,7 +29,7 @@ export function RateSetting() {
       setLoading(false);
       return;
     }
-    
+
     const data: RateUpdatePayload = {
       hourlyRate: hRate,
       lateNightRate: lnRate,
@@ -86,7 +86,7 @@ export function RateSetting() {
           required
         />
 
-        <label>現在のパスワード</label>
+        <label>オーナーパスワード</label>
         <input
           type="password"
           value={currentPassword}

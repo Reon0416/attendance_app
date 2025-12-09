@@ -60,7 +60,7 @@ export function UserIdSetting() {
           onChange={(e) => setNewUserId(e.target.value)}
           required
         />
-        <label>現在のパスワード</label>
+        <label>オーナーパスワード</label>
         <input
           type="password"
           value={currentPassword}
