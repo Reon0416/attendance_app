@@ -69,8 +69,8 @@ export async function loginHandler(req: Request, res: Response) {
   // HttpOnly Cookie にJWTをセット
   res.cookie("access_token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
     maxAge: 60 * 60 * 1000, // 1時間（ミリ秒）
   });
 
