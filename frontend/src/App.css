@@ -1,0 +1,16 @@
+.login-load {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-message {
+  padding: 12px;
+  background-color: #fee2e2;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #f87171;
+  color: #b91c1c;
+  text-align: center;
+  font-weight: 500;
+}

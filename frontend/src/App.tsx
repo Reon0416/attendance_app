@@ -2,6 +2,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
 import type { User } from "./types";
+import { LoadingImage } from "./components/LoadingImage";
 import LoginPage from "./pages/Login/LoginPage";
 import HealthPage from "./pages/employee/health/HealthPage";
 import EmployeeTablePage from "./pages/owner/table/EmployeeTablePage";
@@ -18,8 +19,8 @@ function App() {
 
   if (initialLoading) {
     return (
-      <div className="text-3xl font-bold text-blue-600">
-        ログイン状態を確認しています…
+      <div className="login-load">
+        <LoadingImage />
       </div>
     );
   }
@@ -29,7 +30,7 @@ function App() {
   return (
     <div className="font-sans">
       {error && (
-        <div className="p-3 bg-red-100 border border-red-400 text-red-700 text-center font-medium">
+        <div className="error-message">
           {error}
         </div>
       )}
