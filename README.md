@@ -1,6 +1,6 @@
 # 体調&モチベーション把握のできる勤怠管理システム
 
-## 📘 概要
+## 概要
 
 本システムは、勤怠管理とあわせて従業員の「健康状態」と「モチベーション」を可視化できる Web アプリケーションです。
 出勤打刻と同時に、その日の体調ややる気を簡単に入力し推移をグラフにして表示することでオーナーが従業員の体調状況を把握できるようになっています。
@@ -51,9 +51,20 @@
 | 7   | **設定画面**         |　ユーザーID変更、パスワード変更、時給変更、アカウント作成                                         | 特になし  |
 
 ## 実際の画面
+### 勤怠画面
 <img width="800" height="700" alt="Image" src="https://github.com/user-attachments/assets/a329e77c-707c-4f58-aecb-264c3f584364" />
+
+### 体調推移グラフ画面
 <img width="800" height="700" alt="Image" src="https://github.com/user-attachments/assets/d2d2f85a-87f4-491c-8b22-a5befff7b54f" />
+
+### 目標&給与画面
 <img width="800" height="700" alt="Image" src="https://github.com/user-attachments/assets/4f4d45d7-387a-486a-aa9d-ea1e52694657" />
+
+### 設定画面
 <img width="800" height="700" alt="Image" src="https://github.com/user-attachments/assets/64095581-a182-4e31-a10d-0f55a1084fe3" />
+
+### オーナー管理画面
 <img width="800" height="700" alt="Image" src="https://github.com/user-attachments/assets/c8dfe6ad-82e4-41ff-af75-52f4cb2a2f9a" />
+
+### 従業員給与まとめ
 <img width="800" height="700" alt="Image" src="https://github.com/user-attachments/assets/68090547-1e4b-4455-b59b-87262b8d9b17" />
