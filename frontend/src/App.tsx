@@ -12,6 +12,7 @@ import SettingEmpPage from "./pages/employee/setting/SettingEmpPage";
 import PayrollPage from "./pages/employee/payroll/PayrollPage";
 import AttendancePage from "./pages/employee/attendance/AttendancePage";
 import OwnerPage from "./pages/owner/health/OwnerPage";
+import "./App.css";
 
 function App() {
   const { user, initialLoading, handleLoginSuccess, error, handleLogout } =
@@ -28,7 +29,7 @@ function App() {
   const isOwner = user?.role === "OWNER";
 
   return (
-    <div className="font-sans">
+    <div >
       {error && (
         <div className="error-message">
           {error}
