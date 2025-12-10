@@ -18,6 +18,7 @@ function App() {
   const { user, initialLoading, handleLoginSuccess, error, handleLogout } =
     useAuth();
 
+
   if (initialLoading) {
     return (
       <div className="login-load">

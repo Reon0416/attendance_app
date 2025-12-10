@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { resisterNewUser } from "../../../api/account";
-import type { AccountRegisterBody, AccountRegisterResponse } from "../../../types";
+import type {
+  AccountRegisterBody,
+  AccountRegisterResponse,
+} from "../../../types";
+import { LoadingImage } from "../../../components/LoadingImage";
 import "../../style/Setting.css";
 
 export function EmployeeAccountSetting() {
-
   const [name, setName] = useState("");
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
@@ -36,13 +39,25 @@ export function EmployeeAccountSetting() {
       return;
     }
 
-    const data: AccountRegisterBody = { userId, name, password, currentPassword };
+    const data: AccountRegisterBody = {
+      userId,
+      name,
+      password,
+      currentPassword,
+    };
 
-    const response: AccountRegisterResponse = await resisterNewUser(data);
-
-    setMessage(`アカウント ${response.user.userId} が正常に作成されました。`);
-
-    setLoading(false);
+    try {
+      const response: AccountRegisterResponse = await resisterNewUser(data);
+      setMessage(`アカウント ${response.user.userId} が正常に作成されました。`);
+      setUserId("");
+      setPassword("");
+      setPasswordConfirm("");
+      setCurrentPassword("");
+    } catch (error: any) {
+      setMessage(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -52,7 +67,7 @@ export function EmployeeAccountSetting() {
         {message && (
           <p
             className={`message ${
-              message.includes("8文字以上") || message.includes("一致しません")
+              message.includes("8文字以上") || message.includes("一致しません") || message.includes("すでに")
                 ? "error"
                 : "success"
             }`}
@@ -102,7 +117,7 @@ export function EmployeeAccountSetting() {
         />
 
         <button type="submit" disabled={loading}>
-          {loading ? "登録中..." : "アカウントを作成"}
+          {loading ? <LoadingImage /> : "アカウントを作成"}
         </button>
       </form>
     </div>

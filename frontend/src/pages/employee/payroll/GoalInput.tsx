@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { setGoal } from "../../../api/goal";
 import type { GoalSetResponse, GoalSetBody } from "../../../types";
+import { LoadingImage } from "../../../components/LoadingImage";
 import "./style/Goal.css";
 
 type GoalInputProps = {
@@ -74,7 +75,7 @@ export function GoalInput({ onGoalSet }: GoalInputProps) {
         />
 
         <button type="submit" disabled={loading}>
-          {loading ? "設定中..." : "新しい目標を設定"}
+          {loading ? <LoadingImage /> : "新しい目標を設定"}
         </button>
       </form>
     </div>

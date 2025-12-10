@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { updatePassword } from "../api/setting";
 import type { PasswordUpdateBody } from "../types";
+import { LoadingImage } from "./LoadingImage";
 import "./style/Setting.css";
 
 export function PasswordSetting() {
@@ -33,14 +34,18 @@ export function PasswordSetting() {
       newPasswordConfirm,
     };
 
-    const response = await updatePassword(data);
-    setMessage(response.message || "パスワードを更新しました。");
+    try {
+      const response = await updatePassword(data);
+      setMessage(response.message || "パスワードを更新しました。");
 
-    setCurrentPassword("");
-    setNewPassword("");
-    setNewPasswordConfirm("");
-
-    setLoading(false);
+      setCurrentPassword("");
+      setNewPassword("");
+      setNewPasswordConfirm("");
+    } catch (error: any) {
+      setMessage(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -50,7 +55,11 @@ export function PasswordSetting() {
         {message && (
           <p
             className={`message ${
-              message.includes("失敗") || message.includes("一致しません")
+              message.includes("失敗") ||
+              message.includes("一致しません") ||
+              message.includes("新しい") ||
+              message.includes("8") ||
+              message.includes("ありません")
                 ? "error"
                 : "success"
             }`}
@@ -81,7 +90,7 @@ export function PasswordSetting() {
         />
 
         <button type="submit" disabled={loading}>
-          {loading ? "更新中..." : "パスワードを更新"}
+          {loading ? <LoadingImage /> : "パスワードを更新"}
         </button>
       </form>
     </div>

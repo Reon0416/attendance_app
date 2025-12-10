@@ -1,7 +1,10 @@
 .loading-image-container {
-  width: 20px;
-  height: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.load-image {
+  width: 20px;
+  height: 20px;
 }

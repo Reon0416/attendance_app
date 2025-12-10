@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { updateRateAPI } from "../../../api/setting";
 import type { RateUpdatePayload } from "../../../types";
+import { LoadingImage } from "../../../components/LoadingImage";
 import "../../style/Setting.css";
 
 export function RateSetting() {
@@ -36,16 +37,22 @@ export function RateSetting() {
       currentPassword: currentPassword,
     };
 
-    const response = await updateRateAPI(data);
+    try {
+      const response = await updateRateAPI(data);
 
-    setMessage(
-      response.message ||
-        `新しい時給設定 (時給: ¥${hRate.toLocaleString()}, 深夜: ¥${lnRate.toLocaleString()}) を記録しました。`
-    );
+      setMessage(
+        response.message ||
+          `新しい時給設定 (時給: ¥${hRate.toLocaleString()}, 深夜: ¥${lnRate.toLocaleString()}) を記録しました。`
+      );
 
-    setHourlyRate("");
-    setLateNightRate("");
-    setLoading(false);
+      setHourlyRate("");
+      setLateNightRate("");
+      setCurrentPassword("");
+    } catch (error: any) {
+      setMessage(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -57,7 +64,11 @@ export function RateSetting() {
             className={`message ${
               message.includes("失敗") ||
               message.includes("権限") ||
-              message.includes("数値")
+              message.includes("数値") ||
+              message.includes("オーナーのみ") ||
+              message.includes("有効な") ||
+              message.includes("エラー") ||
+              message.includes("ありません")
                 ? "error"
                 : "success"
             }`}
@@ -95,7 +106,7 @@ export function RateSetting() {
         />
 
         <button type="submit" disabled={loading}>
-          {loading ? "更新中..." : "時給設定を記録"}
+          {loading ? <LoadingImage /> : "時給設定を記録"}
         </button>
       </form>
     </div>

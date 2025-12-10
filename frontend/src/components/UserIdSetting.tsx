@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { updateUserId } from "../api/setting";
 import type { UserIdUpdateBody } from "../types";
+import { LoadingImage } from "./LoadingImage";
 import "./style/Setting.css";
 
 export function UserIdSetting() {
@@ -25,17 +26,21 @@ export function UserIdSetting() {
       newUserId,
     };
 
-    const response = await updateUserId(data);
+    try {
+      const response = await updateUserId(data);
 
-    const displayId = response.newUserId || newUserId;
-    setMessage(
-      response.message ||
-        `ユーザーID（メールアドレス）を ${displayId} に更新しました。`
-    );
-
-    setCurrentPassword("");
-    setNewUserId("");
-    setLoading(false);
+      const displayId = response.newUserId || newUserId;
+      setMessage(
+        response.message ||
+          `ユーザーID（メールアドレス）を ${displayId} に更新しました。`
+      );
+      setCurrentPassword("");
+      setNewUserId("");
+    } catch (error: any) {
+      setMessage(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -45,7 +50,10 @@ export function UserIdSetting() {
         {message && (
           <p
             className={`message ${
-              message.includes("失敗") || message.includes("正しくありません")
+              message.includes("失敗") ||
+              message.includes("新しい") ||
+              message.includes("正しくありません") ||
+              message.includes("既に使用されています")
                 ? "error"
                 : "success"
             }`}
@@ -61,7 +69,7 @@ export function UserIdSetting() {
           onChange={(e) => setCurrentPassword(e.target.value)}
           required
         />
-        
+
         <label>新しいメールアドレス</label>
         <input
           type="email"
@@ -71,7 +79,7 @@ export function UserIdSetting() {
         />
 
         <button type="submit" disabled={loading}>
-          {loading ? "更新中..." : "メールアドレスを更新"}
+          {loading ? <LoadingImage /> : "メールアドレスを更新"}
         </button>
       </form>
     </div>

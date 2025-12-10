@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { login } from "../../api/auth";
 import type { User } from "../../types";
+import { LoadingImage } from "../../components/LoadingImage";
 import "./style/LoginPage.css";
 
 type LoginPageProps = {
@@ -78,7 +79,7 @@ function LoginPage({ onLogin }: LoginPageProps) {
           {error && <p className="login-error-message">{error}</p>}
 
           <button type="submit" disabled={loading} className="login-button">
-            {loading ? "ログイン中..." : "ログイン"}
+            {loading ? <LoadingImage /> : "ログイン"}
           </button>
         </form>
       </div>
