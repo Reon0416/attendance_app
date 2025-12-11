@@ -79,7 +79,7 @@ export function UserIdSetting() {
           required
         />
 
-        // 一時的にボタンを押せないようにしています。通常のコードはコメントアウトしているコードになります。
+      {/* 一時的にボタンを押せないようにしています。通常のコードはコメントアウトしているコードになります。 */}
 
         {/* <button type="submit" disabled={loading}>
           {loading ? <LoadingImage /> : "メールアドレスを更新"}
