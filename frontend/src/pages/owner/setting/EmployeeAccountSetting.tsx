@@ -116,7 +116,12 @@ export function EmployeeAccountSetting() {
           required
         />
 
-        <button type="submit" disabled={loading}>
+         // 一時的にボタンを押せないようにしています。通常のコードはコメントアウトしているコードになります。
+
+        {/* <button type="submit" disabled={loading}>
+          {loading ? <LoadingImage /> : "アカウントを作成"}
+        </button> */}
+        <button type="submit" disabled={true}>
           {loading ? <LoadingImage /> : "アカウントを作成"}
         </button>
       </form>

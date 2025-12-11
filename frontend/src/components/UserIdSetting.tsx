@@ -27,6 +27,7 @@ export function UserIdSetting() {
     };
 
     try {
+      
       const response = await updateUserId(data);
 
       const displayId = response.newUserId || newUserId;
@@ -78,7 +79,12 @@ export function UserIdSetting() {
           required
         />
 
-        <button type="submit" disabled={loading}>
+        // 一時的にボタンを押せないようにしています。通常のコードはコメントアウトしているコードになります。
+
+        {/* <button type="submit" disabled={loading}>
+          {loading ? <LoadingImage /> : "メールアドレスを更新"}
+        </button> */}
+        <button type="submit" disabled={true}>
           {loading ? <LoadingImage /> : "メールアドレスを更新"}
         </button>
       </form>

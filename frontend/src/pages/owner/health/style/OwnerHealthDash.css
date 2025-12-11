@@ -55,8 +55,5 @@
 .health-chart-display {
     margin-top: 30px;
     padding: 20px;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
     background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }

@@ -4,6 +4,7 @@ import {
   markAlertAsCheckedAPI,
 } from "../../../api/healthCheck";
 import type { AlertLog } from "../../../types";
+import { LoadingImage } from "../../../components/LoadingImage";
 import "./style/OwnerAlertDash.css";
 
 export function OwnerAlertDash() {
@@ -72,7 +73,7 @@ export function OwnerAlertDash() {
               disabled={isCurrentAlertUpdating}
               className="check-button"
             >
-              {isCurrentAlertUpdating ? "処理中..." : "確認"}
+              {isCurrentAlertUpdating ? <LoadingImage /> : "確認"}
             </button>
           </div>
         );
