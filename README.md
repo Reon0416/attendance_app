@@ -1,5 +1,7 @@
 # 体調&モチベーション把握のできる勤怠管理システム
-https://attendance-app-0416.vercel.app
+https://attendance-app-0416.vercel.app  
+
+(設定画面のボタンは一時的に押せないようにしています)
 
 ## 概要
 
