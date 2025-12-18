@@ -28,7 +28,7 @@ export async function setGoalHandler(req: AuthRequest, res: Response) {
   }
 
   try {
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: any) => {
       const oldActiveGoal = await tx.goal.findFirst({
         where: { employeeId: user.id, isActive: true },
         orderBy: { createdAt: "desc" },

@@ -99,7 +99,7 @@ export async function resisterHealthRecordHandler(
     let totalHealthPoints = 0;
     let totalMotivationPoints = 0;
 
-    pastRecords.forEach((record) => {
+    pastRecords.forEach((record: any) => {
       totalHealthPoints += severityToPoints(record.health);
       totalMotivationPoints += severityToPoints(record.motivation);
     });
