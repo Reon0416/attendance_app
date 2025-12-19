@@ -8,10 +8,10 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/User'
-export type * from './models/Attendance'
-export type * from './models/HealthCheck'
-export type * from './models/Rate'
-export type * from './models/Goal'
-export type * from './models/HealthAlertLog'
-export type * from './commonInputTypes'
+export type * from './models/User.js'
+export type * from './models/Attendance.js'
+export type * from './models/HealthCheck.js'
+export type * from './models/Rate.js'
+export type * from './models/Goal.js'
+export type * from './models/HealthAlertLog.js'
+export type * from './commonInputTypes.js'
