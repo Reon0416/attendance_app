@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { prisma } from "../prismaClient";
+import { prisma } from "../prismaClient.js";
 
 // JWTの署名に使う秘密鍵（.env から読み込む）
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret-key";

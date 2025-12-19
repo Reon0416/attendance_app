@@ -1,7 +1,7 @@
 import { Response, NextFunction } from "express";
-import { prisma } from "../prismaClient";
+import { prisma } from "../prismaClient.js";
 import bcrypt from "bcrypt";
-import { AuthRequest } from "./authMiddleware";
+import { AuthRequest } from "./authMiddleware.js";
 
 /**
  * リクエストボディの'currentPassword'がDBに保存されているハッシュと一致するか検証するミドルウェア

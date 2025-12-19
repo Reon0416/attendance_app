@@ -1,4 +1,4 @@
-import { AttendanceAction } from "./generated/prisma/enums";
+import { AttendanceAction } from "./generated/prisma/enums.js";
 
 export type AttendanceRecord = {
   id: number;

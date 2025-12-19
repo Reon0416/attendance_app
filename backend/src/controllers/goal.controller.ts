@@ -1,8 +1,8 @@
-import { AuthRequest } from "./auth.controller";
+import { AuthRequest } from "./auth.controller.js";
 import { Response } from "express";
-import { prisma } from "../prismaClient";
-import { calculatePayroll } from "../services/payrollService";
-import { getAttendanceRecordsSince } from "../services/attendanceService";
+import { prisma } from "../prismaClient.js";
+import { calculatePayroll } from "../services/payrollService.js";
+import { getAttendanceRecordsSince } from "../services/attendanceService.js";
 import { console } from "inspector";
 
 type GoalBody = {

@@ -3,12 +3,12 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import authRouter from "./routers/auth.router";
-import attendanceRouter from "./routers/attendance.router";
-import healthRouter from "./routers/health.router";
-import goalRouter from "./routers/goal.router";
-import settingRouter from "./routers/setting.router";
-import calculationRouter from "./routers/calculation.router";
+import authRouter from "./routers/auth.router.js";
+import attendanceRouter from "./routers/attendance.router.js";
+import healthRouter from "./routers/health.router.js";
+import goalRouter from "./routers/goal.router.js";
+import settingRouter from "./routers/setting.router.js";
+import calculationRouter from "./routers/calculation.router.js";
 
 const app = express();
 const PORT = process.env.PORT || 8080;

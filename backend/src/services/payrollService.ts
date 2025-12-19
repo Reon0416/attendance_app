@@ -1,4 +1,4 @@
-import { AttendanceRecord } from "../type";
+import { AttendanceRecord } from "../type.js";
 
 /**
  * 開始時刻と終了時刻の間隔を通常勤務と深夜勤務に分割する

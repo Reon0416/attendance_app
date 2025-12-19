@@ -1,9 +1,9 @@
 import { Response } from "express";
-import { prisma } from "../prismaClient";
+import { prisma } from "../prismaClient.js";
 import bcrypt from "bcrypt";
-import { AuthRequest } from "../middlewares/authMiddleware";
-import { AccountRegisterBody } from "../type";
-import { Role } from "../generated/prisma/enums";
+import { AuthRequest } from "../middlewares/authMiddleware.js";
+import { AccountRegisterBody } from "../type.js";
+import { Role } from "../generated/prisma/enums.js";
 
 // パスワード変更のリクエストボディの型
 type PasswordUpdateBody = {

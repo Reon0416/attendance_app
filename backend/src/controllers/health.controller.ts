@@ -1,6 +1,6 @@
-import { AuthRequest } from "../middlewares/authMiddleware";
+import { AuthRequest } from "../middlewares/authMiddleware.js";
 import { Response } from "express";
-import { prisma } from "../prismaClient";
+import { prisma } from "../prismaClient.js";
 
 const ROLLING_DAYS = 7;
 const BORDER_VALUE = 5;

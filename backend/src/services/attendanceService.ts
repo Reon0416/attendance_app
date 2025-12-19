@@ -1,6 +1,6 @@
-import { prisma } from "../prismaClient";
-import { AttendanceRecord } from "../type";
-import { getEndOfCalculationPeriod } from "./lastDayOfMonth";
+import { prisma } from "../prismaClient.js";
+import { AttendanceRecord } from "../type.js";
+import { getEndOfCalculationPeriod } from "./lastDayOfMonth.js";
 
 /** 月の勤怠レコードを返す関数 */
 export async function getMonthlyAttendanceRecords(

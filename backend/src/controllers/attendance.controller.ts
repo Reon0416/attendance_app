@@ -1,8 +1,8 @@
 import { Response } from "express";
-import { AttendanceAction } from "../generated/prisma/enums";
-import { prisma } from "../prismaClient";
-import { AuthRequest } from "../middlewares/authMiddleware";
-import { getMonthlyAttendanceRecords } from "../services/attendanceService";
+import { AttendanceAction } from "../generated/prisma/enums.js";
+import { prisma } from "../prismaClient.js";
+import { AuthRequest } from "../middlewares/authMiddleware.js";
+import { getMonthlyAttendanceRecords } from "../services/attendanceService.js";
 
 /** 勤怠情報の登録*/
 export async function resisterAttendanceHandler(
