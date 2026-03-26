@@ -20,6 +20,8 @@ export async function resisterNewUser(
     body: JSON.stringify(data),
   });
 
+
+
   if (!res.ok) {
     console.error("[Register error] status:", res.status);
     let errorMessage = "アカウント登録に失敗しました";
